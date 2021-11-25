@@ -24,6 +24,10 @@ body {
   height: auto;
   margin-right: 15px;
 }
+.country-info-title {
+  display: flex;
+  align-items: center;
+}
 .country-list li {
   list-style: none;
   display: flex;

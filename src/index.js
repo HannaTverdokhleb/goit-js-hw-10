@@ -4,7 +4,8 @@ import Notiflix from 'notiflix';
 const DEBOUNCE_DELAY = 300;
 
 const input = document.getElementById('search-box');
-
+const countryList = document.querySelector('.country-list');
+const countryInfo = document.querySelector('.country-info');
 function fetchCountries(name) {
   return fetch(
     `https://restcountries.com/v3.1/name/${name}?fields=name,capital,population,flags,languages`,
@@ -17,6 +18,8 @@ function fetchCountries(name) {
     })
     .catch(error => {
       Notiflix.Notify.failure('Oops, there is no country with that name');
+      countryInfo.innerHTML = '';
+      countryList.innerHTML = '';
     });
 }
 const debounce = require('lodash.debounce');
@@ -30,6 +33,8 @@ input.addEventListener(
       .then(response => {
         if (response.length > 10) {
           Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
+          countryInfo.innerHTML = '';
+          countryList.innerHTML = '';
           return;
         }
         renderCountryList(response);
@@ -39,8 +44,7 @@ input.addEventListener(
 );
 
 function renderCountryList(countries) {
-  const countryList = document.querySelector('.country-list');
-  const countryInfo = document.querySelector('.country-info');
+  
 
   if (countries.length === 1) {
     let [item] = countries;
