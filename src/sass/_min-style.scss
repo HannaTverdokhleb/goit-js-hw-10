@@ -1,0 +1,11 @@
+.country-list img,
+.country-info-title img  {
+  width: 50px;
+  height: auto;
+  margin-right: 15px;
+}
+.country-list li {
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
