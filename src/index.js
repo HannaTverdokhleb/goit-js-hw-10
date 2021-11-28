@@ -1,32 +1,17 @@
 import './css/styles.css';
 import Notiflix from 'notiflix';
-
+import fetchCountries from './fetchCountries';
 const DEBOUNCE_DELAY = 300;
 
 const input = document.getElementById('search-box');
 const countryList = document.querySelector('.country-list');
 const countryInfo = document.querySelector('.country-info');
-function fetchCountries(name) {
-  return fetch(
-    `https://restcountries.com/v3.1/name/${name}?fields=name,capital,population,flags,languages`,
-  )
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      return response.json();
-    })
-    .catch(error => {
-      Notiflix.Notify.failure('Oops, there is no country with that name');
-      countryInfo.innerHTML = '';
-      countryList.innerHTML = '';
-    });
-}
+
 const debounce = require('lodash.debounce');
 input.addEventListener(
   'input',
   debounce(event => {
-    if (event.target.value.length <= 0) {
+    if (event.target.value.trim().length <= 0) {
       return;
     }
     fetchCountries(event.target.value.trim())
@@ -44,8 +29,6 @@ input.addEventListener(
 );
 
 function renderCountryList(countries) {
-  
-
   if (countries.length === 1) {
     let [item] = countries;
     const languages = Object.keys(item.languages)
